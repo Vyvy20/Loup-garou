@@ -5,11 +5,12 @@ class Joueur {
         this.playername = playername;
     }
     
-    action(){
+    actionNight(council, vote, extra){
       throw new Error('Méthode action() non implémentée.')
     }
 
-    actionDay(council, living_players, dead_players){
+    actionDay(council, vote, extra){
+        council.addVote(vote)
     }
 
     victoryCondition(){
