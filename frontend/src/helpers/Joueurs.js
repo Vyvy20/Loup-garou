@@ -1,8 +1,14 @@
 class Joueur {
     skipAuthorization = true;
     unique = false;
+    role = "Joueur"
+    description = "Un participant a la partie de Loups Garous"
     constructor(playername) {
         this.playername = playername;
+    }
+
+    actionPregame() {
+        return
     }
     
     actionNight(council, vote, extra){
