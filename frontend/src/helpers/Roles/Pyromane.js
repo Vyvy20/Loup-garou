@@ -1,0 +1,3 @@
+class Pyromane extends joueurs {
+
+}
