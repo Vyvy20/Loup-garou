@@ -10,5 +10,6 @@ class Villageois extends Joueur {
 
   victoryCondition(living_players) {
     //checkrole des perso vivant, si aucun loup/perso solo
+    return false;
   }
 }
