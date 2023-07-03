@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Box, Typography} from "@mui/material";
+import {Grid, Box, Typography, Button} from "@mui/material";
 import Allie from "./Allie";
 import Actions from "./Actions";
 
@@ -18,6 +18,9 @@ function Joueur() {
         </Grid>
         <Grid xs={3}>
           <Actions/>
+        </Grid>
+        <Grid>
+        <Button variant="contained" sx={{marginLeft: '90%', marginTop: '10%'}}>Joueur suivant</Button>
         </Grid>
       </Grid>
     </Box>
