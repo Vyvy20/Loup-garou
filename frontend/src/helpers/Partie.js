@@ -185,5 +185,46 @@ class Game {
         console.log("The player "+ playername + " has been eliminated by the werewolfs");
         return this.message("La nuit s'achève, le village découvre les actions passé dans la nuit.")
     }
+
+    pregameActions(who, vote, extra = {}) {
+
+    }
+
+    daytime_action(who, vote, extra = {}) {
+        const player = this.livingPlayers[this.playing]
+        if (who !== player.playername) {
+            throw new Error("Player trying to play is not the current player")
+        }
+        player.actionDay(this.council, vote, extra)
+        return this.nextPlayer()
+    }
+
+    nighttime_action(who, vote, extra = {}) {
+        const player = this.livingPlayers[this.playing]
+        if (who !== player.playername) {
+            throw new Error("Player trying to play is not the current player")
+        }
+        extra["dead_this_turn"] = this.dead_this_turn
+        this.dead_this_turn = player.nighttime_action()
+    }
+
+    action(who, vote, extra = {}) {
+        const player = this.livingPlayers[this.playing]
+        if (who !== player.playername) {
+            throw new Error("Player trying to play is not the current player")
+        }
+        let data = {}
+        if(this.phase === Phases.Day) { 
+            data = player.actionDay(this.council, vote, extra)
+        }
+        if(this.phase === Phases.Night) { 
+            data = player.actionNight(this.council, vote, extra)
+        }
+        if(this.phase === Phases.PreGame) {
+            data = player.actionPregame(this.council, vote, extra)
+        }
+        this.cycle.shift()
+        return data
+    }
 }
 
