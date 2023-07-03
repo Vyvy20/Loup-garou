@@ -9,7 +9,7 @@ class Joueur {
       throw new Error('Méthode action() non implémentée.')
     }
 
-    actionDay(votes, listLivePlayers){
+    actionDay(council, living_players, dead_players){
     }
 
     victoryCondition(){

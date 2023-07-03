@@ -75,10 +75,10 @@ class Game {
     }
 
     night() {
-
+        this.playing.actionNight(this.council, this.living_players, this.dead_players);
     }
 
     day() {
-
+        this.playing.actionDay(this.council, this.living_players, this.dead_players);
     }
 }

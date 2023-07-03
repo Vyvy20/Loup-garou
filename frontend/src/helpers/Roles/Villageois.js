@@ -1,7 +1,14 @@
-class villageois extends joueurs {
-    constructor(name, votes, listLivePlayers, skipAuthorization, role, roleAllie) {
-        super(name, votes, listLivePlayers, skipAuthorization);
-        this.role = role;
-        this.roleAllie = roleAllie;
-      }
+import { Joueur } from "../Joueurs";
+
+class Villageois extends Joueur {
+  role = "Villageois";
+  skipNight = true;
+
+  action() {
+    return
+  }
+
+  victoryCondition(living_players) {
+    //checkrole des perso vivant, si aucun loup/perso solo
+  }
 }
