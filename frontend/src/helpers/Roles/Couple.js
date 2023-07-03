@@ -1,0 +1,3 @@
+class Couple extends joueurs {
+
+}

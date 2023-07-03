@@ -1,0 +1,3 @@
+class Sorciere extends joueurs {
+
+}

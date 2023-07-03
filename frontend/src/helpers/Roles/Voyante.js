@@ -1,0 +1,3 @@
+class Voyante extends joueurs {
+
+}
