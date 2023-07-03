@@ -1,6 +1,7 @@
 import React from "react";
 import {Grid, Box, Typography} from "@mui/material";
 import Allie from "./Allie";
+import Actions from "./Actions";
 
 function Joueur() {
   return(
@@ -14,6 +15,9 @@ function Joueur() {
         </Grid>
         <Grid xs={3}>
           <Allie/>
+        </Grid>
+        <Grid xs={3}>
+          <Actions/>
         </Grid>
       </Grid>
     </Box>
