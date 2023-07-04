@@ -50,7 +50,7 @@ function Lobby(){
                 return false
             }
         }
-        setPlayers([...players, name])
+        setPlayers((old) => {return [...old, name]})
         setNum((old) => {return old+1})
         return true
     }
