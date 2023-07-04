@@ -9,11 +9,9 @@ function PhaseEnd({turn, handleNextPlayer = () => {}}) {
         setData(turn)
       }, [turn])
     
-      const handleClick = () => {
+    const handleClick = () => {
         handleNextPlayer()
     }
-
-    console.log(data)
     
     return (
         <Box>

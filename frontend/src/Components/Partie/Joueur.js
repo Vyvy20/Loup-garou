@@ -32,10 +32,10 @@ function Joueur({ data, handleNextPlayer = () => {} }) {
 					<Allie/>
 				</Grid>
 				<Grid xs={3}>
-					<Actions/>
+					<Actions phase={phase} role={user.role.name}/>
 				</Grid>
 				<Grid>
-				<Button variant="contained" sx={{marginLeft: '90%', marginTop: '10%'}} onClick={handleClick}>Joueur suivant</Button>
+					<Button variant="contained" sx={{marginLeft: '90%', marginTop: '10%'}} onClick={handleClick}>Joueur suivant</Button>
 				</Grid>
 			</Grid>
       	)}
