@@ -15,7 +15,7 @@ class Council {
     }
 
     playerToKill(type = "conseil") {
-        const players = this.votes[type].keys()
+        const players = this.votes[type]
         let player_to_kill = {
             player: null,
             number: 0

@@ -6,6 +6,7 @@ class Sorciere extends joueurs {
     'Une sorcière qui peut lancer un sort pour tuer ou ressusciter un joueur pendant la nuit.';
   usedKillPower = false;
   usedResurrectPower = false;
+  night = true;
 
   actionNight(council, vote, extra) {
     if (!extra || !extra.playername || !extra.action) {
