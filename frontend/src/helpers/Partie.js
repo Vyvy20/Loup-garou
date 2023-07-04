@@ -1,12 +1,6 @@
 import { Council } from "./Council"; 
 import { Joueur } from "./Joueurs";
-
-const Phases = {
-    PreGame: 0,
-    Night: 1,
-    Day: 2,
-    End: 3
-}
+import { Phases } from "./Phases";
 
 class Game {
     round = 0;
@@ -31,7 +25,8 @@ class Game {
 
     end() {
         let winners = [];
-        for (const player in this.living_players) {
+        for (const index in this.living_players) {
+            const player = this.living_players[index]
             if (player.victoryCondition()) {
                 winners.push(player);
             }
@@ -81,18 +76,22 @@ class Game {
         }
         // if turn to play is a player, send all needed datas
         const player = this.living_players[playername];
+        if (!player.canPlay(this.phase)) {
+            this.nextPlayer()
+            return this.get_turn()
+        }
         return {
             data: {
                 end: false,
                 player: {
-                    name: player.name,
+                    name: player.playername,
                     role: {
                         name: player.role,
                         description: player.description
                     }
                 },
+                phase: this.phase
             },
-            phase: this.phase
         }
     }
 
@@ -115,7 +114,7 @@ class Game {
         
         // check if game ended after applying all end phase scenario
         const winners = this.end();
-        if (winners) {
+        if (winners.length > 0) {
             return {
                 data: {
                     end: true,
@@ -187,7 +186,12 @@ class Game {
     }
 
     pregameActions(who, vote, extra = {}) {
-
+        const player = this.livingPlayers[this.playing]
+        if (who !== player.playername) {
+            throw new Error("Player trying to play is not the current player")
+        }
+        player.actionDay(this.council, vote, extra)
+        return this.nextPlayer()
     }
 
     daytime_action(who, vote, extra = {}) {
@@ -223,7 +227,7 @@ class Game {
         if(this.phase === Phases.PreGame) {
             data = player.actionPregame(this.council, vote, extra)
         }
-        this.cycle.shift()
+        this.nextPlayer()
         return data
     }
 }

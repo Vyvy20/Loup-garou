@@ -1,8 +1,13 @@
+import { Phases } from "./Phases";
+
 class Joueur {
   skipAuthorization = true;
   unique = false;
   role = 'Joueur';
   description = 'Un participant a la partie de Loups Garous';
+  pregame = false;
+  night = false;
+  
   constructor(playername) {
     this.playername = playername;
   }
@@ -20,7 +25,7 @@ class Joueur {
   }
 
   victoryCondition() {
-    throw new Error('Méthode conditionDeVictoire() non implémentée.');
+    throw new Error('Méthode victoryCondition() non implémentée.');
   }
 
   message(data) {
@@ -31,6 +36,19 @@ class Joueur {
     if (!message) throw new Error('Aucun message dans les données fournies.');
 
     return message;
+  }
+
+  canPlay(phase) {
+    switch (phase) {
+      case Phases.PreGame:
+        return this.pregame
+      case Phases.Day:
+        return true;
+      case Phases.Night:
+        return this.night;
+      default:
+        return false;
+    }
   }
 }
 

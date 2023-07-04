@@ -4,6 +4,7 @@ class Voyante extends joueurs {
   role = 'Voyante';
   description =
     'Une voyante qui peut voir le rôle des autres joueurs pendant la nuit.';
+  night = true;
 
   actionNight(council, vote, extra) {
     if (!extra || !extra.playername) {

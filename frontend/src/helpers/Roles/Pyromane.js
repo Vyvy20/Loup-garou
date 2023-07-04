@@ -4,6 +4,7 @@ class Pyromane extends joueurs {
   role = 'Pyromane';
   description =
     "Un pyromane qui peut mettre de l'essence sur les autres joueurs.";
+  night = true;
 
   actionNight(council, living_players, extra) {
     if (!extra || !Array.isArray(extra.targets) || extra.targets.length > 3) {
