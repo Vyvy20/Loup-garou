@@ -5,6 +5,7 @@ import Game from "../helpers/Partie";
 import {SetGameContext} from "./Interface";
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
+import { useNavigate } from 'react-router-dom';
 
 function CustomTypefield({onValidate, onRemove}) {
     const [name, setName] = useState("");
@@ -38,6 +39,7 @@ function CustomTypefield({onValidate, onRemove}) {
 function Lobby(){
     const [players, setPlayers] = useState([]);
     const [num, setNum] = useState(0);
+    const navigate = useNavigate();
 
     const setGame = useContext(SetGameContext);
     
@@ -65,6 +67,7 @@ function Lobby(){
 
     const startGame = () => {
         setGame(new Game(players))
+        navigate("/app/game")
     }
 
     let typefields = [<CustomTypefield onValidate={handleAdd} onRemove={handleRemove}/>]
