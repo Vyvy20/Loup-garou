@@ -1,59 +1,60 @@
 import React, { useState } from 'react';
-import { Grid, Paper, Typography, Button, Box } from '@mui/material';
+import { Grid, Radio, RadioGroup, FormControl, FormControlLabel, Button } from '@mui/material';
 
-const App = () => {
-  const votesinitial = [
-    { player: 'Frank',votes: 0},
-    { player: 'Esteban', votes : 0 },
-    { player: 'Camille', votes : 0},
-    { player: 'Laughan' ,votes : 0},
-    { player: 'Nicolas' ,votes : 0},
-    { player: 'Nicky' ,votes : 0},
-  ];
+const Votes = () => {
+  const [selectedPlayer, setSelectedPlayer] = useState(''); 
+  const [votes, setVotes] = useState([]);
+  const players = ['Joueur 1', 'Joueur 2', 'Joueur 3', 'Joueur 4','Joueur 5'];  
 
-  const [votes, setVotes] = useState(votesinitial);
-
-  const handleVote = (index) => {
-    setVotes((prevVotes) => {
-      const updatedVotes = [...prevVotes];
-      updatedVotes[index].votes += 1;
-      return updatedVotes;
-    });
+  const handlePlayerSelection = (event) => {
+    setSelectedPlayer(event.target.value);
   };
 
-  const handleReset = () => {
-    setVotes(votesinitial);
+  const handleVote = () => {
+    if (selectedPlayer !== '') {
+      setVotes((prevVotes) => [...prevVotes, selectedPlayer]);
+      setSelectedPlayer('');
+    }
+  };
+
+  const handleResetVotes = () => {
+    setVotes([]);
   };
 
   return (
-    <Grid container spacing={2} justifyContent="center" paddingTop={5}>
-      <Grid item xs={12}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Votes des Joueurs
-        </Typography>
-      </Grid>
-      {votes.map((player, index) => (
-        <Grid item key={index}>
-          <Paper elevation={3} style={{ padding: '10px', textAlign: 'center' }}>
-            <Typography variant="subtitle1" gutterBottom>
-              {player.player}
-            </Typography>
-            <Typography variant="body1">Votes: {player.votes}</Typography>
-            <Button variant="contained" color="primary" onClick={() => handleVote(index)}>
-              Voter
-            </Button>
-          </Paper>
-        </Grid>
-      ))}
-      <Grid item xs={12}>
-        <Box display="flex" justifyContent="center">
-        <Button variant="contained" color="secondary" onClick={handleReset} >
-          Réinitialiser
+    <Grid container justifyContent="center" alignItems="center" spacing={2}>
+      <Grid  justifyContent="center">
+        <h2>Vote de jour</h2>
+        <FormControl component="fieldset">
+          <RadioGroup
+            aria-label="players"
+            name="players"
+            value={selectedPlayer}
+            onChange={handlePlayerSelection}
+          >
+            {players.map((player) => (
+              <FormControlLabel key={player} value={player} control={<Radio />} label={player} />
+            ))}
+          </RadioGroup>
+        </FormControl>
+        <Button disabled={selectedPlayer === ''} onClick={handleVote}>
+          Valider le vote
         </Button>
-        </Box>
+      </Grid>
+
+      <Grid justifyContent="center">
+        <h3>Votes enregistrés :</h3>
+        {votes.length > 0 ? (
+          votes.map((player, index) => <p key={index}>{player}</p>)
+        ) : (
+          <p>Aucun vote enregistré.</p>
+        )}
+        {votes.length > 0 && <Button onClick={handleResetVotes}>Réinitialiser les votes</Button>}
       </Grid>
     </Grid>
   );
 };
 
-export default App;
+export default Votes;
+
+
