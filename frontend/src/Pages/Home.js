@@ -1,5 +1,6 @@
 import React from "react";
-import Lobby from "../Composants/Lobby/Lobby"
+//import Lobby from "../Composants/Lobby/Lobby"
+import Votes from "../Composants/Votes/votes"
 
 
 function Home(props) {
@@ -7,7 +8,9 @@ function Home(props) {
    
     return (
         <div>
-            <Lobby/>
+           
+           <Votes/>
+         
         </div>
     )
 }
