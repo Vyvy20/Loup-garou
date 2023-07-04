@@ -8,19 +8,27 @@ import DoneIcon from '@mui/icons-material/Done';
 
 function CustomTypefield({onValidate, onRemove}) {
     const [name, setName] = useState("");
+    const [color, setColor] = useState("lightblue")
 
     const handleValidate = () => {
-        onValidate(name)
+        if(name === "") {
+            return
+        }
+        const valided = onValidate(name)
+        if(valided) {
+            setColor("lightgreen")
+        }
     }
 
     const handleRemove = () => {
         onRemove(name)
         setName("")
+        setColor("lightblue")
     }
 
     return (
         <Box sx={{ mb: "16px"}}>
-            <TextField value={name} onChange={(e) => setName(e.target.value)}/>
+            <TextField value={name} onChange={(e) => setName(e.target.value)} sx={{backgroundColor: color}}/>
             <Button endIcon={<DoneIcon color="success"/>} onClick={handleValidate}/>
             <Button endIcon={<ClearIcon color="error" />} onClick={handleRemove}/>
         </Box>
@@ -35,29 +43,28 @@ function Lobby(){
     
     const handleAdd = (name) => {
         if(!name) {
-            return
+            return false
         }
         for(const player in players) {
-            if (player === name) {
-                return
+            if (players[player] === name) {
+                return false
             }
         }
         setPlayers([...players, name])
         setNum((old) => {return old+1})
+        return true
     }
 
     const handleRemove = (name) => {
+        if(!name) {
+            return
+        }
         setPlayers((old) => {return players.filter(value => value !== name)})
         setNum((old) => {return old-1})
     }
 
     const startGame = () => {
         setGame(new Game(players))
-    }
-
-    const handleReset = () => {
-        setPlayers([])
-        setNum(0)
     }
 
     let typefields = [<CustomTypefield onValidate={handleAdd} onRemove={handleRemove}/>]
@@ -83,11 +90,6 @@ function Lobby(){
                     Play
             </Button>
             </Box>
-            <Box m={1}>
-                <Button variant="contained" color="error" onClick={handleReset}>
-                    Reset
-            </Button>
-        </Box>
       </Box>
     )
 }
