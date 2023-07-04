@@ -1,6 +1,6 @@
-import { joueurs } from '../Joueurs';
+import { Joueur } from '../Joueurs';
 
-class Villageois extends joueurs {
+class Villageois extends Joueur {
   role = 'Villageois';
   skipNight = true;
   description = 'Un simple villageois qui essaye de survivre.';

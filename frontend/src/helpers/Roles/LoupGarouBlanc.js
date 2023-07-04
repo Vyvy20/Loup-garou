@@ -1,4 +1,4 @@
-import { Joueur } from './Joueurs';
+import { Joueur } from '../Joueurs';
 
 class LoupGarouBlanc extends Joueur {
   role = 'LoupGarouBlanc';

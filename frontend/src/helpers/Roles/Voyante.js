@@ -1,6 +1,6 @@
-import { joueurs } from '../Joueurs';
+import { Joueur } from '../Joueurs';
 
-class Voyante extends joueurs {
+class Voyante extends Joueur {
   role = 'Voyante';
   description =
     'Une voyante qui peut voir le rôle des autres joueurs pendant la nuit.';
