@@ -1,23 +1,27 @@
-class joueurs {
-    constructor(name, votes, listLivePlayers, skipAuthorization) {
-      this.name = name;
-      this.votes = votes;
-      this.listLivePlayers = listLivePlayers;
-      this.skipAuthorization  = skipAuthorization;
-      this.unique = true; 
+class Joueur {
+    skipAuthorization = true;
+    unique = false;
+    role = "Joueur"
+    description = "Un participant a la partie de Loups Garous"
+    constructor(playername) {
+        this.playername = playername;
+    }
+
+    actionPregame() {
+        return
     }
     
-    action(){
+    actionNight(council, vote, extra){
       throw new Error('Méthode action() non implémentée.')
     }
 
-    actionDay(votes, listLivePlayers){
-          this.votes = votes;
-          this.listLivePlayers = listLivePlayers;
-        }
+    actionDay(council, vote, extra){
+        council.addVote(vote)
+    }
 
     victoryCondition(){
       throw new Error('Méthode conditionDeVictoire() non implémentée.');
     }
   }
 
+export { Joueur }
