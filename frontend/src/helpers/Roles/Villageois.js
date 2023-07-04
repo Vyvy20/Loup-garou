@@ -5,9 +5,6 @@ class Villageois extends joueurs {
   skipNight = true;
   description = 'Un simple villageois qui essaye de survivre.';
 
-  constructor(playername) {
-    super(playername);
-  }
 
   actionNight(council, vote, extra) {
     this.message({
@@ -17,8 +14,12 @@ class Villageois extends joueurs {
   }
 
   victoryCondition(living_players) {
-    for (const player of Object.values(living_players)) {
-      if (player.role === 'Loup-Garou' && player.role === 'Loup-Garou Blanc') {
+    for (const playername in living_players) {
+      if (
+        living_players[playername].role === 'LoupGarou' ||
+        living_players[playername].role === 'LoupGarouBlanc' ||
+        living_players[playername].role === 'Pyromane'
+      ) {
         return false;
       }
     }

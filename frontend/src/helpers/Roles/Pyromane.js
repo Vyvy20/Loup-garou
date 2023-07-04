@@ -5,10 +5,6 @@ class Pyromane extends joueurs {
   description =
     "Un pyromane qui peut mettre de l'essence sur les autres joueurs.";
 
-  constructor(playername) {
-    super(playername);
-  }
-
   actionNight(council, living_players, extra) {
     if (!extra || !Array.isArray(extra.targets) || extra.targets.length > 3) {
       throw new Error(
@@ -37,15 +33,15 @@ class Pyromane extends joueurs {
   }
 
   victoryCondition(living_players) {
-    let livingPlayersCount = Object.keys(living_players).length;
-
-    if (livingPlayersCount === 1 && living_players[this.playername]) {
-      return this.message({
-        message:
-          'Le Pyromane est le dernier joueur en vie et a gagné la partie!',
+    if (
+      Object.keys(living_players).length === 1 &&
+      living_players[this.playername]
+    ) {
+      this.message({
+        message: 'Le Pyromane a gagné. Il est le dernier en vie.',
       });
+      return true;
     }
-
     return false;
   }
 }

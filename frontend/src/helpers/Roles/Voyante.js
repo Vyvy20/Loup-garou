@@ -5,10 +5,6 @@ class Voyante extends joueurs {
   description =
     'Une voyante qui peut voir le rôle des autres joueurs pendant la nuit.';
 
-  constructor(playername) {
-    super(playername);
-  }
-
   actionNight(council, vote, extra) {
     if (!extra || !extra.playername) {
       throw new Error('Aucun joueur choisi pour la Voyante à observer.');
@@ -19,8 +15,12 @@ class Voyante extends joueurs {
   }
 
   victoryCondition(living_players) {
-    for (const player of Object.values(living_players)) {
-      if (player.role === 'Loup-Garou' && player.role === 'Loup-Garou Blanc') {
+    for (const playername in living_players) {
+      if (
+        living_players[playername].role === 'LoupGarou' ||
+        living_players[playername].role === 'LoupGarouBlanc' ||
+        living_players[playername].role === 'Pyromane'
+      ) {
         return false;
       }
     }

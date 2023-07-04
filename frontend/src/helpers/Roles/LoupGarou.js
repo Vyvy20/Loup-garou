@@ -4,10 +4,6 @@ class LoupGarou extends Joueur {
   role = 'LoupGarou';
   description = 'Un loup-garou qui gagne quand tous les villageois sont morts.';
 
-  constructor(playername) {
-    super(playername);
-  }
-
   actionNight(council, vote) {
     council.addVote(vote, 1, 'loups_garou');
   }

@@ -7,10 +7,6 @@ class Sorciere extends joueurs {
   usedKillPower = false;
   usedResurrectPower = false;
 
-  constructor(playername) {
-    super(playername);
-  }
-
   actionNight(council, vote, extra) {
     if (!extra || !extra.playername || !extra.action) {
       throw new Error(
@@ -41,8 +37,12 @@ class Sorciere extends joueurs {
   }
 
   victoryCondition(living_players) {
-    for (const player of Object.values(living_players)) {
-      if (player.role === 'Loup-Garou' && player.role === 'Loup-Garou Blanc') {
+    for (const playername in living_players) {
+      if (
+        living_players[playername].role === 'LoupGarou' ||
+        living_players[playername].role === 'LoupGarouBlanc' ||
+        living_players[playername].role === 'Pyromane'
+      ) {
         return false;
       }
     }

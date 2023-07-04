@@ -6,10 +6,6 @@ class Cupidon extends Joueur {
 
   couple = [];
 
-  constructor(playername) {
-    super(playername);
-  }
-
   actionPregame(living_players, playername1, playername2) {
     if (living_players[playername1] && living_players[playername2]) {
       this.couple = [playername1, playername2];
@@ -44,7 +40,11 @@ class Cupidon extends Joueur {
       !living_players[this.couple[1]]
     ) {
       for (const playername in living_players) {
-        if (living_players[playername].role === 'LoupGarou') {
+        if (
+          living_players[playername].role === 'LoupGarou' ||
+          living_players[playername].role === 'LoupGarouBlanc' ||
+          living_players[playername].role === 'Pyromane'
+        ) {
           return false;
         }
       }
