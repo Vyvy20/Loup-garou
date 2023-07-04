@@ -20,7 +20,7 @@ class Pyromane extends joueurs {
 
       living_players[target].fuelStacks += 1;
       if (living_players[target].fuelStacks >= 3) {
-        council.addVote(target, 1, 'loups_garou');
+        extra.dead_this_turn.push(target);
         this.message({
           message: `Le joueur ${target} a été brûlé par le pyromane.`,
         });

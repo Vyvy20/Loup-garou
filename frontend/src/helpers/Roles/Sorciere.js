@@ -18,7 +18,7 @@ class Sorciere extends joueurs {
       if (this.usedKillPower) {
         throw new Error('Vous avez déjà utilisé votre pouvoir de tuer.');
       }
-      council.addVote(extra.playername, 1, 'loups_garou');
+      extra.dead_this_turn.push(extra.playername);
       this.message({
         message: `Vous avez choisi de tuer le joueur ${extra.playername}.`,
       });
@@ -27,9 +27,16 @@ class Sorciere extends joueurs {
       if (this.usedResurrectPower) {
         throw new Error('Vous avez déjà utilisé votre pouvoir de ressusciter.');
       }
-      this.message({
-        message: `Vous avez choisi de ressusciter le joueur ${extra.playername}.`,
-      });
+      const index = extra.dead_this_turn.indexOf(extra.playername);
+      if (index > -1) {
+        extra.dead_this_turn.splice(index, 1);
+        extra.resurrected_this_turn.push(extra.playername);
+        this.message({
+          message: `Vous avez choisi de ressusciter le joueur ${extra.playername}.`,
+        });
+      } else {
+        throw new Error(`Le joueur ${extra.playername} n'est pas mort.`);
+      }
       this.usedResurrectPower = true;
     } else {
       throw new Error('Action non reconnue pour la Sorcière à effectuer.');
