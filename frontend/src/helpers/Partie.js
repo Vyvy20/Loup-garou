@@ -213,6 +213,7 @@ class Game {
     }
 
     action(who, vote, extra = {}) {
+        extra["living_players"] = this.livingPlayers
         const player = this.livingPlayers[this.playing]
         if (who !== player.playername) {
             throw new Error("Player trying to play is not the current player")
@@ -229,6 +230,10 @@ class Game {
         }
         this.nextPlayer()
         return data
+    }
+
+    getLivingPlayers() {
+        return this.living_players
     }
 }
 
