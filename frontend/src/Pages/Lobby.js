@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Box, TextField, Button, Typography} from '@mui/material';
 import logo from '../images/Loup.png';
 import Game from "../helpers/Partie";
-import SetGameContext from "./Interface";
+import {SetGameContext} from "./Interface";
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
 
@@ -71,8 +71,6 @@ function Lobby(){
     for (let i = 0; i < num; i++) {
         typefields.push(<CustomTypefield onValidate={handleAdd} onRemove={handleRemove}/>)
     }
-
-    console.log(players)
     
     return (
         <Box display="flex" flexDirection="column" alignItems="center" marginTop={1}  marginBottom ="5px">
