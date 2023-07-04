@@ -10,11 +10,11 @@ function AppRoutes() {
 }
 
 export default function App() {
-  return (
-    <div className="App"> 
-            <HistoryRouter history={createBrowserHistory()}>
-                <AppRoutes />
-            </HistoryRouter>
-    </div>
-  )
+	return (
+		<div className="App"> 
+			<HistoryRouter history={createBrowserHistory()}>
+				<AppRoutes />
+			</HistoryRouter>
+		</div>
+	)
 }

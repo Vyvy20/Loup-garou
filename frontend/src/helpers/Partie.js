@@ -21,8 +21,8 @@ class Game {
     constructor(player_list) {
         this.phase = Phases.PreGame
         for (const player in player_list) {
-            const joueur = new Joueur(player);
-            this.living_players[player] = joueur;
+            const joueur = new Joueur(player_list[player]);
+            this.living_players[player_list[player]] = joueur;
             this.players.push(joueur);
         }
         this.playing = 0;
@@ -65,7 +65,7 @@ class Game {
 
     setCycle() {
         let cycle = []
-        for (const player in this.living_players.keys()){
+        for (const player in this.living_players){
             cycle.push(player)
         }
         cycle.push(false)
@@ -228,3 +228,4 @@ class Game {
     }
 }
 
+export default Game;
