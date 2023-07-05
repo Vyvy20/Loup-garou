@@ -1,6 +1,6 @@
-import { joueurs } from '../Joueurs';
+import { Joueur } from '../Joueurs';
 
-class Sorciere extends joueurs {
+class Sorciere extends Joueur {
   role = 'Sorciere';
   description =
     'Une sorcière qui peut lancer un sort pour tuer ou ressusciter un joueur pendant la nuit.';

@@ -1,6 +1,6 @@
-import { joueurs } from '../Joueurs';
+import { Joueur } from '../Joueurs';
 
-class Pyromane extends joueurs {
+class Pyromane extends Joueur {
   role = 'Pyromane';
   description =
     "Un pyromane qui peut mettre de l'essence sur les autres joueurs.";
