@@ -98,6 +98,7 @@ class Game {
     }
     return winners;
   }
+
   nextPhase() {
     switch (this.phase) {
       case Phases.PreGame:
@@ -179,7 +180,7 @@ class Game {
 
     // check if game ended after applying all end phase scenario
     const winners = this.end();
-    if (winners) {
+    if (winners.length > 0) {
       return {
         data: {
           end: true,
@@ -193,6 +194,7 @@ class Game {
       };
     }
 
+    // change phase in backend before sending turn message
     this.nextPhase();
     return {
       data: data,
@@ -210,6 +212,7 @@ class Game {
       deadPlayers: this.dead_this_turn,
       resurectedPlayers: this.resurected_this_turn,
     };
+    // before sending message, reset this turns counters
     for (const deadPlayer in this.dead_this_turn) {
       this.dead_players.push(deadPlayer);
       delete this.living_players[deadPlayer.name];
@@ -229,6 +232,7 @@ class Game {
   }
 
   daytime_end() {
+    // kill with council
     const playername = this.council.playerToKill();
     if (!playername) {
       return this.message("La journée s'achève pour le village");
@@ -283,6 +287,7 @@ class Game {
   }
 
   action(who, vote, extra = {}) {
+    extra['living_players'] = this.livingPlayers;
     const player = this.livingPlayers[this.playing];
     if (who !== player.playername) {
       throw new Error('Player trying to play is not the current player');
@@ -297,7 +302,7 @@ class Game {
     if (this.phase === Phases.PreGame) {
       data = player.actionPregame(this.council, vote, extra);
     }
-    this.cycle.shift();
+    this.nextPlayer();
     return data;
   }
 
