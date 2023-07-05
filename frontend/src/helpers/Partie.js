@@ -1,4 +1,6 @@
 import { Council } from './Council';
+import { Joueur } from './Joueurs';
+import { Phases } from './Phases';
 import { Voyante } from './Roles/Voyante';
 import { Villageois } from './Roles/Villageois';
 import { Sorciere } from './Roles/Sorciere';
@@ -8,13 +10,6 @@ import { LoupGarouBlanc } from './Roles/LoupGarouBlanc';
 import { LoupGarou } from './Roles/LoupGarou';
 import { Cupidon } from './Roles/Cupidon';
 import { Corbeau } from './Roles/Corbeau';
-
-const Phases = {
-  PreGame: 0,
-  Night: 1,
-  Day: 2,
-  End: 3,
-};
 
 class Game {
   round = 0;
@@ -94,14 +89,15 @@ class Game {
 
   end() {
     let winners = [];
-    for (const player in this.living_players) {
-      if (player.victoryCondition()) {
-        winners.push(player);
+    for (const index in this.living_players) {
+      const player = this.living_players[index];
+      if (player.victoryCondition(this.living_players)) {
+        this.phase = Phases.End;
+        winners.push(player.playername);
       }
     }
     return winners;
   }
-
   nextPhase() {
     switch (this.phase) {
       case Phases.PreGame:
@@ -136,23 +132,31 @@ class Game {
   }
 
   get_turn() {
+    // get at the start of the turn to get displayable values
     const playername = this.cycle[0];
     if (!playername) {
-      return this.endPhase();
+      // in case all players have played and phase have to end
+      const data = this.endPhase();
+      return data;
     }
+    // if turn to play is a player, send all needed datas
     const player = this.living_players[playername];
+    if (!player.canPlay(this.phase)) {
+      this.nextPlayer();
+      return this.get_turn();
+    }
     return {
       data: {
         end: false,
         player: {
-          name: player.name,
+          name: player.playername,
           role: {
             name: player.role,
             description: player.description,
           },
         },
+        phase: this.phase,
       },
-      phase: this.phase,
     };
   }
 
@@ -173,6 +177,7 @@ class Game {
         break;
     }
 
+    // check if game ended after applying all end phase scenario
     const winners = this.end();
     if (winners) {
       return {
@@ -250,7 +255,14 @@ class Game {
     );
   }
 
-  pregameActions(who, vote, extra = {}) {}
+  pregameActions(who, vote, extra = {}) {
+    const player = this.livingPlayers[this.playing];
+    if (who !== player.playername) {
+      throw new Error('Player trying to play is not the current player');
+    }
+    player.actionDay(this.council, vote, extra);
+    return this.nextPlayer();
+  }
 
   daytime_action(who, vote, extra = {}) {
     const player = this.livingPlayers[this.playing];
@@ -287,6 +299,10 @@ class Game {
     }
     this.cycle.shift();
     return data;
+  }
+
+  getLivingPlayers() {
+    return this.living_players;
   }
 
   random(array) {
