@@ -11,6 +11,38 @@ import { LoupGarou } from './Roles/LoupGarou';
 import { Cupidon } from './Roles/Cupidon';
 import { Corbeau } from './Roles/Corbeau';
 
+function random(array) {
+    let currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    // Tant que l'index courant n'est pas nul
+    while (0 !== currentIndex) {
+      // On génère un index aléatoire entre 0 (inclus) et l'index courant (exclu)
+
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      // On décrémente l'index courant
+      currentIndex -= 1;
+
+      // On effectue l'échange de la valeur à l'index courant avec la valeur à l'index aléatoire
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+const role_list = [
+    'Voyante',
+    'Villageois',
+    'Sorciere',
+    'Pyromane',
+    'PetiteFille',
+    'LoupGarouBlanc',
+    'LoupGarou',
+    'Cupidon',
+    'Corbeau',
+];
 
 class Game {
   round = 0;
@@ -25,21 +57,9 @@ class Game {
   constructor(player_list, roles) {
     this.phase = Phases.PreGame;
 
-    const role_list = [
-      'Voyante',
-      'Villageois',
-      'Sorciere',
-      'Pyromane',
-      'PetiteFille',
-      'LoupGarouBlanc',
-      'LoupGarou',
-      'Cupidon',
-      'Corbeau',
-    ];
-
     // Randomiser la liste des joueurs et des rôles
-    player_list = this.random(player_list);
-    roles = this.random(role_list);
+    player_list = random(player_list);
+    roles = random(role_list);
 
     for (let i = 0; i < player_list.length; i++) {
       // S'il y a plus de 9 joueurs alors ajouté des Villageois
@@ -148,6 +168,7 @@ class Game {
       return this.get_turn();
 
     }
+    // else return user datas
     return {
       data: {
         end: false,
@@ -311,27 +332,6 @@ class Game {
 
   getLivingPlayers() {
     return this.living_players;
-  }
-
-  random(array) {
-    let currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-    // Tant que l'index courant n'est pas nul
-    while (0 !== currentIndex) {
-      // On génère un index aléatoire entre 0 (inclus) et l'index courant (exclu)
-
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      // On décrémente l'index courant
-      currentIndex -= 1;
-
-      // On effectue l'échange de la valeur à l'index courant avec la valeur à l'index aléatoire
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
   }
 
   printPlayers() {
