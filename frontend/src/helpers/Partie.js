@@ -11,6 +11,7 @@ import { LoupGarou } from './Roles/LoupGarou';
 import { Cupidon } from './Roles/Cupidon';
 import { Corbeau } from './Roles/Corbeau';
 
+
 class Game {
   round = 0;
   players = [];
@@ -145,6 +146,7 @@ class Game {
     if (!player.canPlay(this.phase)) {
       this.nextPlayer();
       return this.get_turn();
+
     }
     return {
       data: {
@@ -281,6 +283,7 @@ class Game {
     const player = this.livingPlayers[this.playing];
     if (who !== player.playername) {
       throw new Error('Player trying to play is not the current player');
+
     }
     extra['dead_this_turn'] = this.dead_this_turn;
     this.dead_this_turn = player.nighttime_action();
@@ -337,6 +340,7 @@ class Game {
       console.log(this.players[i]);
     }
   }
+
 }
 
 export default Game;

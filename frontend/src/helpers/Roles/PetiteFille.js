@@ -3,7 +3,8 @@ import { Joueur } from '../Joueurs';
 class PetiteFille extends Joueur {
   role = 'PetiteFille';
   description = 'Une petite fille qui peut identifier un loup-garou la nuit.';
-
+  night = true;
+  
   actionNight(council, living_players) {
     // Liste de tous les loups-garous (ou loups-garous blancs) encore vivants
     let werewolves = Object.values(living_players).filter(

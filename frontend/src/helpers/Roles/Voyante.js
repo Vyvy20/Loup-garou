@@ -4,13 +4,15 @@ class Voyante extends Joueur {
   role = 'Voyante';
   description =
     'Une voyante qui peut voir le rôle des autres joueurs pendant la nuit.';
+  night = true;
 
   actionNight(council, vote, extra) {
-    if (!extra || !extra.playername) {
+    if (!vote || !vote.playername) {
       throw new Error('Aucun joueur choisi pour la Voyante à observer.');
     }
+    const player = extra["living_players"][vote]
     this.message({
-      message: `Le joueur que vous avez observé est un ${extra.role}.`,
+      message: `${vote} que vous avez observé est un ${player.role}.`,
     });
   }
 
@@ -25,7 +27,7 @@ class Voyante extends Joueur {
       }
     }
     if (living_players[this.playername] !== undefined) {
-      this.message({ message: 'Félicitations, vous avez gagné!' });
+      console.log(this.playername + " à gagné la partie")
       return true;
     }
     return false;
