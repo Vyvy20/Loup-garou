@@ -1,5 +1,13 @@
 import { Council } from './Council';
-import { Joueur } from './Joueurs';
+import { Voyante } from './Roles/Voyante';
+import { Villageois } from './Roles/Villageois';
+import { Sorciere } from './Roles/Sorciere';
+import { Pyromane } from './Roles/Pyromane';
+import { PetiteFille } from './Roles/PetiteFille';
+import { LoupGarouBlanc } from './Roles/LoupGarouBlanc';
+import { LoupGarou } from './Roles/LoupGarou';
+import { Cupidon } from './Roles/Cupidon';
+import { Corbeau } from './Roles/Corbeau';
 
 const Phases = {
   PreGame: 0,
@@ -20,10 +28,65 @@ class Game {
 
   constructor(player_list, roles) {
     this.phase = Phases.PreGame;
+
+    const role_list = [
+      'Voyante',
+      'Villageois',
+      'Sorciere',
+      'Pyromane',
+      'PetiteFille',
+      'LoupGarouBlanc',
+      'LoupGarou',
+      'Cupidon',
+      'Corbeau',
+    ];
+
+    // Randomiser la liste des joueurs et des rôles
+    player_list = this.random(player_list);
+    roles = this.random(role_list);
+
     for (let i = 0; i < player_list.length; i++) {
-      const joueur = new Joueur(player_list[i], roles[i]);
-      this.living_players[player_list[i]] = joueur;
-      this.players.push(joueur);
+      // S'il y a plus de 9 joueurs alors ajouté des Villageois
+      if (i >= 9) {
+        const joueur = new Villageois(player_list[i]);
+        this.living_players[player_list[i]] = joueur;
+        this.players.push(joueur);
+      } else {
+        let role;
+        switch (roles[i]) {
+          case 'Voyante':
+            role = new Voyante(player_list[i]);
+            break;
+          case 'Villageois':
+            role = new Villageois(player_list[i]);
+            break;
+          case 'Sorciere':
+            role = new Sorciere(player_list[i]);
+            break;
+          case 'Pyromane':
+            role = new Pyromane(player_list[i]);
+            break;
+          case 'PetiteFille':
+            role = new PetiteFille(player_list[i]);
+            break;
+          case 'LoupGarouBlanc':
+            role = new LoupGarouBlanc(player_list[i]);
+            break;
+          case 'LoupGarou':
+            role = new LoupGarou(player_list[i]);
+            break;
+          case 'Cupidon':
+            role = new Cupidon(player_list[i]);
+            break;
+          case 'Corbeau':
+            role = new Corbeau(player_list[i]);
+            break;
+          default:
+            break;
+        }
+        this.living_players[player_list[i]] = role;
+        this.players.push(role);
+      }
     }
     this.playing = 0;
     this.cycle = this.setCycle();
@@ -73,13 +136,10 @@ class Game {
   }
 
   get_turn() {
-    // get at the start of the turn to get displayable values
     const playername = this.cycle[0];
     if (!playername) {
-      // in case all players have played and phase have to end
       return this.endPhase();
     }
-    // if turn to play is a player, send all needed datas
     const player = this.living_players[playername];
     return {
       data: {
@@ -113,7 +173,6 @@ class Game {
         break;
     }
 
-    // check if game ended after applying all end phase scenario
     const winners = this.end();
     if (winners) {
       return {
@@ -129,7 +188,6 @@ class Game {
       };
     }
 
-    // change phase in backend before sending turn message
     this.nextPhase();
     return {
       data: data,
@@ -147,7 +205,6 @@ class Game {
       deadPlayers: this.dead_this_turn,
       resurectedPlayers: this.resurected_this_turn,
     };
-    // before sending message, reset this turns counters
     for (const deadPlayer in this.dead_this_turn) {
       this.dead_players.push(deadPlayer);
       delete this.living_players[deadPlayer.name];
@@ -167,7 +224,6 @@ class Game {
   }
 
   daytime_end() {
-    // kill with council
     const playername = this.council.playerToKill();
     if (!playername) {
       return this.message("La journée s'achève pour le village");
@@ -232,12 +288,32 @@ class Game {
     this.cycle.shift();
     return data;
   }
+
+  random(array) {
+    let currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    // Tant que l'index courant n'est pas nul
+    while (0 !== currentIndex) {
+      // On génère un index aléatoire entre 0 (inclus) et l'index courant (exclu)
+
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      // On décrémente l'index courant
+      currentIndex -= 1;
+
+      // On effectue l'échange de la valeur à l'index courant avec la valeur à l'index aléatoire
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
   printPlayers() {
     console.log('Affichage des joueurs et leurs rôles:');
     for (let i = 0; i < this.players.length; i++) {
-      console.log(
-        `Nom du Joueur  ${i}: Rôle du Joueur ${this.players[i].role.role}`
-      );
+      console.log(this.players[i]);
     }
   }
 }

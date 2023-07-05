@@ -13,15 +13,6 @@ import { SetGameContext } from './Interface';
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
 import { useNavigate } from 'react-router-dom';
-import { Voyante } from '../helpers/Roles/Voyante';
-import { Villageois } from '../helpers/Roles/Villageois';
-import { Sorciere } from '../helpers/Roles/Sorciere';
-import { Pyromane } from '../helpers/Roles/Pyromane';
-import { PetiteFille } from '../helpers/Roles/PetiteFille';
-import { LoupGarouBlanc } from '../helpers/Roles/LoupGarouBlanc';
-import { LoupGarou } from '../helpers/Roles/LoupGarou';
-import { Cupidon } from '../helpers/Roles/Cupidon';
-import { Corbeau } from '../helpers/Roles/Corbeau';
 
 function CustomTypefield({ onValidate, onRemove }) {
   const [name, setName] = useState('');
@@ -99,26 +90,14 @@ function Lobby() {
   };
 
   const startGame = () => {
-    if (players.length < 9) {
+    if (players.length < 8) {
       setOpen(true);
       return;
     }
 
-    const roles = [
-      new Voyante(players[0]),
-      new Villageois(players[1]),
-      new Sorciere(players[2]),
-      new Pyromane(players[3]),
-      new PetiteFille(players[4]),
-      new LoupGarouBlanc(players[5]),
-      new LoupGarou(players[6]),
-      new Cupidon(players[7]),
-      new Corbeau(players[8]),
-    ];
-
-    const gameInstance = new Game(players, roles); // Créer une nouvelle instance de Game
-    gameInstance.printPlayers(); // Imprimer les joueurs et leurs rôles
-    setGame(gameInstance); // Passer l'instance de jeu au contexte
+    const gameInstance = new Game(players);
+    gameInstance.printPlayers();
+    setGame(gameInstance);
     navigate('/app/game');
   };
 
@@ -159,7 +138,7 @@ function Lobby() {
       </Box>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Vous avez besoin d'au moins 9 joueurs pour commencer le jeu.
+          Vous avez besoin d'au moins 8 joueurs pour commencer le jeu.
         </Alert>
       </Snackbar>
     </Box>
