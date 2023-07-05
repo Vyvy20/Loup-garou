@@ -4,7 +4,7 @@ class Joueur {
   role = 'Joueur';
   description = 'Un participant a la partie de Loups Garous';
   constructor(playername) {
-    this.name = playername;
+    this.playername = playername;
   }
 
   actionPregame() {
