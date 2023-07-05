@@ -27,8 +27,9 @@ class Game {
         let winners = [];
         for (const index in this.living_players) {
             const player = this.living_players[index]
-            if (player.victoryCondition()) {
-                winners.push(player);
+            if (player.victoryCondition(this.living_players)) {
+                this.phase = Phases.End
+                winners.push(player.playername);
             }
         }
         return winners
@@ -72,7 +73,8 @@ class Game {
         const playername = this.cycle[0];
         if (!playername) {
             // in case all players have played and phase have to end
-            return this.endPhase()
+            const data = this.endPhase();
+            return data 
         }
         // if turn to play is a player, send all needed datas
         const player = this.living_players[playername];

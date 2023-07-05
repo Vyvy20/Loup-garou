@@ -1,6 +1,6 @@
-import { joueurs } from '../Joueurs';
+import { Joueur } from '../Joueurs';
 
-class Voyante extends joueurs {
+class Voyante extends Joueur {
   role = 'Voyante';
   description =
     'Une voyante qui peut voir le rôle des autres joueurs pendant la nuit.';
@@ -27,7 +27,7 @@ class Voyante extends joueurs {
       }
     }
     if (living_players[this.playername] !== undefined) {
-      console.log(this.name + " à gagné la partie")
+      console.log(this.playername + " à gagné la partie")
       return true;
     }
     return false;

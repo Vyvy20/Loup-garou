@@ -7,10 +7,13 @@ import PhaseEnd from "../Components/Partie/PhaseEnd";
 function Game(props) {
     const [hidden, setHidden] = useState(true);
     const [turnData, setTurnData] = useState(null)
+    const [phase, setPhase] = useState(null)
     const game = useContext(GameContext)
 
     useEffect(() => {
-        setTurnData(game.get_turn().data)
+        const data = game.get_turn()
+        setTurnData(data.data)
+        setPhase(data.phase)
     }, [game, hidden])
 
     const handleNextPlayer = () => {
@@ -28,7 +31,7 @@ function Game(props) {
                     </Box>
                 )}
                 {!hidden && !turnData.end && <Joueur data={turnData} handleNextPlayer={handleNextPlayer}/>}
-                {!hidden && turnData.end && <PhaseEnd turn={turnData} handleNextPlayer={handleNextPlayer}/>}
+                {!hidden && turnData.end && <PhaseEnd turn={turnData} phase={phase} handleNextPlayer={handleNextPlayer}/>}
             </>
         )}
 
