@@ -20,7 +20,7 @@ function VoteBatterie({livingPlayers, handleValidate = () => {}, maxSelection = 
         else {
             setVotes((old) => { return old.filter(value => value !== index)});
         }
-        if(maxSelection === votes.length()) {
+        if(maxSelection >= votes.length()) {
             setIsReady(true)
         }
         else {
