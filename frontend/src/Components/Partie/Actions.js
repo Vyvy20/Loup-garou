@@ -2,6 +2,7 @@ import React from "react";
 import {Box, Typography} from "@mui/material";
 import { IntToPhases } from "../../helpers/Phases";
 import ExempleAction from "./Actions/ExempleAction";
+import VoyanteNuitAction from "./Actions/VoyanteNuitAction";
 
 const translate = {
   "Jourée": <ExempleAction />,
@@ -24,7 +25,7 @@ const translate = {
     "Nuit": <Typography>Action du Pyromane de nuit</Typography>,
   },
   "Voyante": {
-    "Nuit": <Typography>Action de la Voyante de nuit</Typography>,
+    "Nuit": <VoyanteNuitAction />,
   }
 }
 
