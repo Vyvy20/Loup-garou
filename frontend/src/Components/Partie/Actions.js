@@ -1,18 +1,48 @@
 import React from "react";
-import {Box, Typography, Button, Fab} from "@mui/material";
-import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
+import {Box, Typography} from "@mui/material";
+import { IntToPhases } from "../../helpers/Phases";
+import ExempleAction from "./Actions/ExempleAction";
+import VoyanteNuitAction from "./Actions/VoyanteNuitAction";
 
-function Actions() {
+const translate = {
+  "Jourée": <ExempleAction />,
+  "Corbeau": {
+    "Nuit": <Typography>Action du Corbeau de nuit</Typography>,
+  },
+  "Cupidon": {
+    "Phase préparatoire": <Typography>Action du Cupidon de nuit</Typography>,
+  },
+  "LoupGarou": {
+    "Nuit": <Typography>Action du Loup Garou de nuit</Typography>,
+  },
+  "LoupGarouBlanc": {
+    "Nuit": <Typography>Action du Loup Garou Blanc de nuit</Typography>,
+  },
+  "PetiteFille": {
+    "Nuit": <Typography>Action de la Petite Fille de nuit</Typography>,
+  },
+  "Pyromane": {
+    "Nuit": <Typography>Action du Pyromane de nuit</Typography>,
+  },
+  "Voyante": {
+    "Nuit": <VoyanteNuitAction />,
+  }
+}
+
+function translateAction(phase, role) {
+  if (phase === 2) {
+    return translate[IntToPhases[phase]]
+  }
+  else {
+    return translate[role][IntToPhases[phase]]
+  }
+}
+
+function Actions({phase, role}) {
     return(
-      <Box>
         <Box sx={{border: '1px solid', width: '30%', backgroundColor: 'grey', marginTop: '20%', marginLeft: '37%'}}>
-          <Typography variant="h4">Actions</Typography>
-          <Button variant="contained">action1</Button>
-          <Fab color="primary" aria-label="add" sx={{marginLeft: '80%'}}>
-            <DoneOutlinedIcon />
-          </Fab>
+			{translateAction(phase, role)}
         </Box>
-      </Box>
     )
   }
   export default Actions;
